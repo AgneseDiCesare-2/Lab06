@@ -33,7 +33,7 @@ class View(ft.UserControl):
         self._anno = ft.Dropdown(
             label="anno",
             width=200,
-           options=[ft.dropdown.Option("Nessun Filtro")]
+           options=[]
         )
         self._controller.riempi_anni()
 
@@ -41,7 +41,7 @@ class View(ft.UserControl):
         self._brand = ft.Dropdown(
             label="brand",
             width=200,
-            options=[ft.dropdown.Option("Nessun Filtro")],
+            options=[],
             expand=True,
         )
         self._controller.riempi_brand()
@@ -50,7 +50,7 @@ class View(ft.UserControl):
         self._retail = ft.Dropdown(
             label="retail",
             width=200,
-            options=[ft.dropdown.Option("Nessun Filtro")],
+            options=[],
             expand=True,
         )
         self._controller.riempi_retail()
