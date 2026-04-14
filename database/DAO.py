@@ -1,6 +1,57 @@
 from database.DB_connect import DBConnect
+from model.Retail import Retail
 
 
-class DAO():
+class DAO:
     def __init__(self):
         pass
+
+    @staticmethod
+    def getAllAnni():
+        cnx = DBConnect.get_connection()
+
+        cursor = cnx.cursor()
+        query = """ select distinct(year(Date)) as YEAR
+                    from go_daily_sales"""  # restituisce una lista di anni
+        cursor.execute(query)
+
+        res = []
+        for row in cursor:
+            res.append(row[0]) #lista di anni --> NB: METTI ZERO SENNO SALVA UNA TUPLA E METTE ,
+
+        cursor.close()
+        cnx.close()
+        return res  # lista di anni
+
+    @staticmethod
+    def getAllBrands():
+        cnx = DBConnect.get_connection()
+        cursor = cnx.cursor()
+        query = """ select distinct(Product_brand) as brand
+                    from go_products gp """
+        cursor.execute(query)
+        res = []
+
+        for row in cursor:
+            res.append(row[0]) #lista di brand
+
+        cursor.close()
+        cnx.close()
+        return res
+
+    @staticmethod
+    #vogliamo leggere l'oggetto
+    def getAllRetails():
+        cnx = DBConnect.get_connection()
+        cursor = cnx.cursor(dictionary=True)
+        query = """ select *
+                    from go_retailers gr  """
+        cursor.execute(query)
+        res = {}
+
+        for row in cursor:
+            res[row["Retailer_code"]]=(Retail(**row))  # dizionario di details (oggetti) con chiave l'id
+
+        cursor.close()
+        cnx.close()
+        return res

@@ -4,14 +4,43 @@ import flet as ft
 class Controller:
     def __init__(self, view, model):
         # the view, with the graphical elements of the UI
+
         self._view = view
         # the model, which implements the logic of the program and holds the data
         self._model = model
+        self._anno=None
+        self._brand=None
+        self._retail=None
 
-    def handle_hello(self, e):
-        name = self._view.txt_name.value
-        if name is None or name == "":
-            self._view.create_alert("Inserire il nome")
-            return
-        self._view.txt_result.controls.append(ft.Text(f"Hello, {name}!"))
-        self._view.update_page()
+    def top_vendite(self, e):
+        pass
+
+    def analizza_vendite(self, e):
+        pass
+
+    def riempi_anni(self): #NB: QUI NON CI VA e!
+        for anno in self._model.getAllAnni():
+            self._view._anno.options.append(
+                ft.dropdown.Option(key=anno, data=anno, on_click=self._choiceAnno))
+            pass
+
+    def _choiceAnno(self, e):
+        self._anno = e.control.data #evento (anno) selezionato nel dropdown
+
+    def riempi_brand(self):
+        for brand in self._model.getAllBrands():
+            self._view._brand.options.append(
+                ft.dropdown.Option(key=brand, data=brand, on_click=self._choice_brand))
+            pass
+
+    def _choice_brand(self, e):
+        self._brand = e.control.data #evento (anno) selezionato nel dropdown
+
+
+    def riempi_retail(self):
+        retails=self._model.getAllRetails().values()
+        for retail in retails: #itero sugli oggetti Retails (valori, non chiavi!)
+            self._view._retail.options.append(ft.dropdown.Option(key=retail.Retailer_code, data=retail, on_click=self.choice_retail))
+
+    def choice_retail(self, e):
+        self._retail=e.control.data
