@@ -13,3 +13,7 @@ class Model:
 
     def getAllRetails(self):
         return DAO.getAllRetails() #dizionario
+
+    def getAllVendite(self):
+        vendite= DAO.getAllVendite()
+        return vendite.sort(key=lambda s: s.ricavo)  # NB!

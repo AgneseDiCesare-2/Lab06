@@ -1,5 +1,6 @@
 from database.DB_connect import DBConnect
 from model.Retail import Retail
+from model.Vendita import Vendita
 
 
 class DAO:
@@ -51,6 +52,22 @@ class DAO:
 
         for row in cursor:
             res[row["Retailer_code"]]=(Retail(**row))  # dizionario di details (oggetti) con chiave l'id
+
+        cursor.close()
+        cnx.close()
+        return res
+
+    @staticmethod
+    def getAllVendite():
+        cnx = DBConnect.get_connection()
+        cursor = cnx.cursor()
+        query = """ select year(gds.`Date`) as anno, gp.Product_brand as brand, gds.Retailer_code as retailer, (gds.Unit_sale_price *gds.Quantity) as ricavo 
+                    from go_products gp, go_daily_sales gds """
+        cursor.execute(query)
+        res = [] #lista di vendite
+
+        for row in cursor:
+            res.append(Vendita(row["anno"], row["brand"], row["retailer"], row["ricavo"]))
 
         cursor.close()
         cnx.close()
