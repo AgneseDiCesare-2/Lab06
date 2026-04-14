@@ -8,5 +8,5 @@ class Vendita:
         self._ricavo=ricavo
 
     def __str__(self):
-        return f"{self._anno} {self._brand} {self._retailer} {self._ricavo}"
+        return f"Anno: {self._anno}, Brand: {self._brand}, Retailer: {self._retailer}, Ricavo: {self._ricavo}"
 

@@ -14,6 +14,8 @@ class Model:
     def getAllRetails(self):
         return DAO.getAllRetails() #dizionario
 
+
     def getAllVendite(self):
-        vendite= DAO.getAllVendite()
-        return vendite.sort(key=lambda s: s.ricavo)  # NB!
+        vendite = DAO.getAllVendite()
+        vendite.sort(key=lambda s: s.ricavo, reverse=True)  # top vendite prima
+        return vendite

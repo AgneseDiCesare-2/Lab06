@@ -13,10 +13,15 @@ class Controller:
         self._retail=None
 
     def top_vendite(self, e):
-        tutte_vendite=self._model.getAllVendite() #lista
+        self._view.txt_result.controls.clear()
+        tutte_vendite=self._model.getAllVendite() #lista --> qui si incasina
+        self._view.txt_result.controls.append(ft.Text("hi"))
+        self._view.update_page()
+
         vendite=tutte_vendite[:5] #prime 5
         for vendita in vendite:
-            self._view.txt_result.controls.append(ft.Text(vendita))
+            self._view.txt_result.controls.append(ft.Text(str(vendita)))
+        self._view.update_page()
 
     def analizza_vendite(self, e):
         pass
