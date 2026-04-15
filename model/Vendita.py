@@ -1,13 +1,18 @@
 from dataclasses import dataclass
+import datetime
+from decimal import Decimal
 
-from model.Retail import Retail
+#i tipi dei dati si capiscono stampando il dao riga per riga
 @dataclass
 class Vendita:
-        anno:str
-        brand: str
-        retailer: Retail
-        ricavo: float
+    data: datetime.date
+    brand: str
+    retailer: int
+    ricavo: Decimal
+    prodotto: int
 
-def __str__(self):
-    return f"Anno: {self._anno}, Brand: {self._brand}, Retailer: {self._retailer}, Ricavo: {self._ricavo}"
+    def getAnno(self):
+        return self.data.year
 
+    def __str__(self):
+        return f"Data: {self.data}; Ricavo: {self.ricavo}; Retailer: {self.retailer}; Product: {self.prodotto}"

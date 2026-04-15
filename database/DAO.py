@@ -58,12 +58,14 @@ class DAO:
         return res
 
     @staticmethod
+    #query che legge tutte le vendite, senza considerare i filtri --> filtro nel model
     def getAllVendite():
         cnx = DBConnect.get_connection()
         cursor = cnx.cursor(dictionary=True)
-        query = """ select year(gds.`Date`) as anno, gp.Product_brand as brand, gds.Retailer_code as retailer, (gds.Unit_sale_price *gds.Quantity) as ricavo 
+        query = """ select gds.`Date`  as data, gp.Product_brand as brand, gds.Retailer_code as retailer, (gds.Unit_sale_price *gds.Quantity) as ricavo, gp.Product_number as prodotto 
                     from go_products gp, go_daily_sales gds
-                    where gp.Product_number = gds.Product_number"""
+                    where gp.Product_number = gds.Product_number 
+"""
         cursor.execute(query)
         res = [] #lista di vendite
 

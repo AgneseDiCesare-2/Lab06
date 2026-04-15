@@ -15,7 +15,18 @@ class Model:
         return DAO.getAllRetails() #dizionario
 
 
-    def getAllVendite(self):
-        vendite = DAO.getAllVendite()
-        vendite.sort(key=lambda s: s.ricavo, reverse=True)  # top vendite prima
-        return vendite
+    def getAllVendite(self, anno, brand, retail):
+        vendite = DAO.getAllVendite() #lista con tutte le vendite
+        vendite_filtrate=[] #voglio i risultati filtrati
+
+        for vendita in vendite:
+            anno_vendita=vendita.getAnno()
+            if (
+                    (anno is None or anno_vendita == anno) and
+                    (brand is None or vendita.brand == brand) and
+                    (retail is None or vendita.retailer.Retailer_code == str(retail))
+            ):
+                vendite_filtrate.append(vendita)
+
+        vendite_filtrate.sort(key=lambda s: s.ricavo, reverse=True)  # top vendite prima
+        return vendite_filtrate

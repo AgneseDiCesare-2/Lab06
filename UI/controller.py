@@ -15,14 +15,19 @@ class Controller:
 
     def top_vendite(self, e):
         self._view.txt_result.controls.clear()
+        tutte_vendite=self._model.getAllVendite(self._anno, self._brand, self._retail)
 
-        tutte_vendite=self._model.getAllVendite() #lista --> qui si incasina
-        self._view.txt_result.controls.append(ft.Text("hi"))
-        self._view.update_page()
+        if len(tutte_vendite)==0:
+            self._view.txt_result.controls.append(ft.Text("Nessuna Vendita per i filtri inseriti"))
+            return
 
-        vendite=tutte_vendite[:5] #prime 5
+        if len(tutte_vendite)<=5:
+            vendite=tutte_vendite
+        else:
+            vendite=tutte_vendite[:5]
+
         for vendita in vendite:
-            self._view.txt_result.controls.append(ft.Text(value=vendita))
+            self._view.txt_result.controls.append(ft.Text(vendita))
         self._view.update_page()
 
     def analizza_vendite(self, e):
@@ -53,7 +58,7 @@ class Controller:
         self._view._retail.options.append(ft.dropdown.Option(key="Nessun Filtro", data=None, on_click=self._choiceAnno))
         retails=self._model.getAllRetails().values()
         for retail in retails: #itero sugli oggetti Retails (valori, non chiavi!)
-            self._view._retail.options.append(ft.dropdown.Option(key=retail.Retailer_code, data=retail, on_click=self.choice_retail))
+            self._view._retail.options.append(ft.dropdown.Option(key=retail.Retailer_name, data=retail, on_click=self.choice_retail))
 
     def choice_retail(self, e):
-        self._retail=e.control.data
+        self._retail=e.control.data #oggetto retail
