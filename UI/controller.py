@@ -15,7 +15,7 @@ class Controller:
 
     def top_vendite(self, e):
         self._view.txt_result.controls.clear()
-        tutte_vendite=self._model.getAllVendite(self._anno, self._brand, self._retail)
+        tutte_vendite=self._model.getAllVendite(self._anno, self._brand, self._retail) #tutte le vendite per i filtri considerati
 
         if len(tutte_vendite)==0:
             self._view.txt_result.controls.append(ft.Text("Nessuna Vendita per i filtri inseriti"))
@@ -32,6 +32,38 @@ class Controller:
         self._view.update_page()
 
     def analizza_vendite(self, e):
+        self._view.txt_result.controls.clear()
+        giro_affari=0
+        dizionario_prodotti={} #{num_prodotto: vendita} --> conto le chiavi e vedo quanti prodotti sono coinvolti
+
+        tutte_vendite = self._model.getAllVendite(self._anno, self._brand, self._retail) #lista di vendite
+        #calcolo ilnumero di retails
+        if (self._retail is None):
+            dizionario_retails={}
+            for vendita in tutte_vendite:
+                dizionario_retails[vendita.retailer]=vendita
+            n_retails=len(dizionario_retails) #conto il numero di chiavi
+        else:
+            n_retails=1
+
+        for vendita in tutte_vendite:
+            giro_affari += vendita.ricavo
+            dizionario_prodotti[vendita.prodotto]=vendita
+
+        n_prodotti=len(dizionario_prodotti)
+        numero_vendite = len(tutte_vendite)  # assicurarsi non contenga doppioni
+        self._view.txt_result.controls.append(ft.Text("Statistiche Vendite:"))
+        self._view.txt_result.controls.append(ft.Text(f"Giro D'affari: {giro_affari}"))
+        self._view.txt_result.controls.append(ft.Text(f"Numero Vendite: {numero_vendite}"))
+        self._view.txt_result.controls.append(ft.Text(f"Numero Retailers Coinvolti: {n_retails}"))
+        self._view.txt_result.controls.append(ft.Text(f"Numero Prodotti Coinvolti: {n_prodotti}"))
+        self._view.update_page()
+
+
+
+
+
+
         pass
 
     def riempi_anni(self): #NB: QUI NON CI VA e!

@@ -30,3 +30,4 @@ class Model:
 
         vendite_filtrate.sort(key=lambda s: s.ricavo, reverse=True)  # top vendite prima
         return vendite_filtrate
+
