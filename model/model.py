@@ -24,7 +24,7 @@ class Model:
             if (
                     (anno is None or anno_vendita == anno) and
                     (brand is None or vendita.brand == brand) and
-                    (retail is None or vendita.retailer.Retailer_code == str(retail))
+                    (retail is None or str(vendita.retailer) == str(retail.Retailer_code))
             ):
                 vendite_filtrate.append(vendita)
 
